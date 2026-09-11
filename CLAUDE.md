@@ -1,4 +1,4 @@
-# Flow Model Generator - Claude Code
+# Flow Model Generator
 
 ## Project Purpose
 
@@ -7,13 +7,13 @@ This project demonstrates how to build a **Flow Model generator** for test autom
 The primary goal is to provide a tool that enables test automation engineers to:
 - Efficiently generate Flow Models for test scripts
 - Maintain separation of concerns between UI elements and user actions
-- Build scalable Test Automation Frameworks (TAF) following the Tri-Layer Testing Architecture
+- Enable building scalable Test Automation Frameworks (TAF) following the Tri-Layer Testing Architecture
 
 ## Core Concepts
 
 ### Flow Model Pattern
 
-The Flow Model Pattern is an enhancement of the traditional Page Object Model (POM) that addresses two key limitations:
+The Flow Model Pattern is an enhancement of the Page Object Model (POM), and addresses two key limitations:
 
 1. **Single Responsibility Principle**: Traditional Page Object Models often violate SRP by combining element locators with action methods, leading to bloated, hard-to-maintain classes.
 2. **Tester's Perspective**: POM has a developer-centric design mindset, whereas the Flow Model Pattern aligns with how test automation engineers naturally think about user interactions.
@@ -78,17 +78,22 @@ When implementing a TAF following this architecture:
 
 ```
 flow_model_generator_claude_code/
-├── README.md              # Project overview
-├── CLAUDE.md              # This file
+├── README.md                               # Project overview
+├── CLAUDE.md                               # This file
 └── docs/
-    ├── FLOW-MODEL.md      # Flow Model Pattern documentation
-    └── TRI-LAYER.md       # Tri-Layer Architecture documentation
+    ├── FLOW-MODEL.md                       # Flow Model Pattern documentation
+    └── TRI-LAYER.md                        # Tri-Layer Architecture documentation
+    ├── FLOW-MODEL-JAVA-EXAMPLE.md          # Flow Model Pattern example for Java
+    ├── FLOW-MODEL-PYTHON-EXAMPLE.md        # Flow Model Pattern example for Python
+    ├── FLOW-MODEL-TYPESCRIPT-EXAMPLE.md    # Flow Model Pattern example for TypeScript
+├── example-playwright-taf                  # Example Playwright TAF with single test
+├── example-playwright-taf-with-models      # Example Playwright TAF with single test
 ```
 
 ## Collaboration Notes
 
 When working with this codebase:
 - Reference the Flow Model Pattern documentation when designing new Flow Models
-- Ensure all components align with the Tri-Layer Architecture
+- Ensure all components align with the Tri-Layer Testing Architecture
 - Prioritize code generation tools that respect the separation between Page Models and Flow Models
 - Keep core libraries portable and tool-independent
