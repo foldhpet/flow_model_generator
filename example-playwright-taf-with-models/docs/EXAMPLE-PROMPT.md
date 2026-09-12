@@ -1,0 +1,3 @@
+# Example Input Prompt to Send to Claude to Generate Flow Models
+
+Generate Page Models and Flow Models based on example-playwright-taf-with-models/docs/USER-FLOWS.md file. Create the Page Models under example-playwright-taf-with-models/src/business/pages and the Flow Models under example-playwright-taf-with-models/src/business/flows folders. Generate new tests or update existing ones under example-playwright-taf-with-models/tests and ensure to import example-playwright-taf-with-models/src/business/foldhazi-base-test to the Test file just like it is in the example-playwright-taf-with-models/tests/LandingPageTest.spec.ts test script. Coding language: TypeScript. Browser automation tool: Playwright.
