@@ -28,8 +28,8 @@ export class LoginPage {
     this.logInWithFacebookButton = this.dialog.getByRole('button', { name: 'Log in with Facebook' });
     this.closeButton = this.dialog.getByRole('button', { name: 'Close' });
     // Wix's site-members dialog shows the failed-login message as inline text near the
-    // password field; matched by common wording since the exact copy wasn't confirmed
-    // against a live failed attempt on the production site.
-    this.errorMessage = this.dialog.getByText(/incorrect|invalid|wrong (email|password)/i);
+    // password field, e.g. "This email doesn't match any account. Try again." or
+    // "Wrong password. Try again." depending on which credential is invalid.
+    this.errorMessage = this.dialog.getByText(/doesn't match any account|wrong password/i);
   }
 }

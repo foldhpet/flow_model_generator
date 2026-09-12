@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { HeaderNavigationPage } from '../pages/header-navigation.page';
 import { LoginPage } from '../pages/login.page';
 
@@ -14,12 +14,29 @@ export class LoginFlow {
   }
 
   /**
+   * Wix's site-members widget can render the header Log In button before its click
+   * handler has finished hydrating, so an early click is silently dropped. Retries the
+   * click until the target becomes visible instead of failing on the first miss.
+   */
+  private async clickUntilVisible(trigger: Locator, target: Locator, timeoutMs = 15000, intervalMs = 1000): Promise<void> {
+    const deadline = Date.now() + timeoutMs;
+    for (;;) {
+      await trigger.click();
+      try {
+        await target.waitFor({ state: 'visible', timeout: intervalMs });
+        return;
+      } catch (error) {
+        if (Date.now() >= deadline) throw error;
+      }
+    }
+  }
+
+  /**
    * Opens the Wix site-members dialog and drills down to the email/password login form:
    * Log In (header) -> "Already a member? Log In" -> "Log in with Email".
    */
   async openLoginDialog(): Promise<void> {
-    await this.header.logInButton.click();
-    await this.loginPage.dialog.waitFor({ state: 'visible' });
+    await this.clickUntilVisible(this.header.logInButton, this.loginPage.dialog);
     await this.loginPage.alreadyMemberLogInButton.click();
     await this.loginPage.logInWithEmailButton.click();
     await this.loginPage.emailInput.waitFor({ state: 'visible' });
