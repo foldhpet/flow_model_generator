@@ -77,18 +77,45 @@ When implementing a TAF following this architecture:
 ## Project Structure
 
 ```
-flow_model_generator_claude_code/
+flow_model_generator/
 ├── README.md                               # Project overview
 ├── CLAUDE.md                               # This file
-└── docs/
-    ├── FLOW-MODEL.md                       # Flow Model Pattern documentation
-    └── TRI-LAYER.md                        # Tri-Layer Architecture documentation
-    ├── FLOW-MODEL-JAVA-EXAMPLE.md          # Flow Model Pattern example for Java
-    ├── FLOW-MODEL-PYTHON-EXAMPLE.md        # Flow Model Pattern example for Python
-    ├── FLOW-MODEL-TYPESCRIPT-EXAMPLE.md    # Flow Model Pattern example for TypeScript
-├── example-playwright-taf                  # Example Playwright TAF with single test
-├── example-playwright-taf-with-models      # Example Playwright TAF with single test
+├── LICENSE
+├── package.json                            # Root devDependency on @playwright/test
+├── .claude/
+│   └── skills/
+│       └── flow-model-generation/
+│           └── SKILL.md                    # The Flow Model generator itself (see below)
+├── docs/
+│   ├── FLOW-MODEL.md                       # Flow Model Pattern documentation
+│   ├── TRI-LAYER.md                        # Tri-Layer Architecture documentation
+│   ├── FLOW-MODELS-DESIGN-EXAMPLE.md       # Example flow diagram/design doc output
+│   ├── FLOW-MODEL-JAVA-EXAMPLE.md          # Flow Model Pattern example for Java
+│   ├── FLOW-MODEL-PYTHON-EXAMPLE.md        # Flow Model Pattern example for Python
+│   └── FLOW-MODEL-TYPESCRIPT-EXAMPLE.md    # Flow Model Pattern example for TypeScript
+├── example-playwright-taf/                 # Baseline Playwright TAF, single test, no Flow Models yet
+│   └── src/{business,config,core}, tests/LandingPageTest.spec.ts
+└── example-playwright-taf-with-models/     # Same TAF after running the generator
+    ├── docs/                               # EXAMPLE-PROMPT.md, FLOW-MODELS-DESIGN.md, USER-FLOWS.md
+    ├── src/business/flows/                 # login.flow.ts, menu-navigation.flow.ts
+    ├── src/business/pages/                 # about, articles, blog, conferences, contact,
+    │                                        # header-navigation, home, login page models
+    └── tests/                              # LandingPageTest, LoginTest, MenuNavigationTest specs
 ```
+
+### The Generator Skill
+
+The actual Flow Model generator is implemented as a Claude Code skill at
+`.claude/skills/flow-model-generation/SKILL.md`. Given a test file (or a test name pattern), it:
+
+1. Analyzes the test to identify the user workflow and required page/flow interactions
+2. Updates `docs/FLOW-MODELS-DESIGN.md` in the target project with a flow diagram
+3. Generates/updates flow model classes in `business/flows/{flow-name}.flow.ts`
+4. Generates/updates page model classes in `business/pages/{page-name}.page.ts`
+
+`example-playwright-taf-with-models` is the running example of this skill's output: it started
+as a copy of `example-playwright-taf` (a single landing-page test with no models) and now has
+page models, flow models, and multiple generated test specs.
 
 ## Collaboration Notes
 
