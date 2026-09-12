@@ -13,8 +13,3 @@ Flow Models reference the page objects that are stored in Page Models.
 
 Source information:
 https://www.peterfoldhazi.com/flow-model-pattern
-
-## Coding Examples
-
-### TypeScript
-
